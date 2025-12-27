@@ -1,0 +1,187 @@
+{
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Glog.AI",
+          "organization": "Glog.AI",
+          "fullName": "Glog, Making software more secure",
+          "version": "1.0.0",
+          "semanticVersion": "1.0.0",
+          "informationUri": "https://www.glog.ai",
+          "rules": [
+            {
+              "id": "50c7e1ea-5889-30a3-8d34-604a907d47b2",
+              "name": "High-Risk Dockerfile Vulnerability: Lack of Non-Root User Specification",
+              "helpUri": "https://www.glog.ai/",
+              "help": {
+                "text": "",
+                "markdown": "## Description\n\nIn Docker, the \"High-Risk Dockerfile Vulnerability: Lack of Non-Root User Specification\" vulnerability refers to the situation where a Dockerfile is configured to run its processes as the root user. This is a security concern because if an attacker manages to break out from the container, they would have root access to the host system, which could lead to severe damage.\n\n## Security Concern\n\nRunning Docker containers as root is a common practice due to its simplicity, but it's a bad habit that can lead to serious security issues. If a user manages to break out of the container, they would have root access to the Docker host. This could lead to unauthorized access, data leakage, data corruption, or even denial-of-service attacks.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to always run processes inside Docker containers as a non-root user. This can be achieved by creating a new user and switching to it before executing any commands.\n\n## Source Code Fix Recommendation\n\nHere is how you can modify the Dockerfile to run as a non-root user:\n\n```Dockerfile\nFROM node:11-alpine as build\n\n# Create app directory\nWORKDIR /usr/src/app\n\n# Create a new user and switch to it\nRUN adduser -D myuser\nUSER myuser\n\n# Rest of your Dockerfile...\n```\n\nIn this example, `adduser -D myuser` creates a new user named `myuser`, and `USER myuser` switches to that user.\n\n## References\n\n- [CWE-250: Execution with Unnecessary Privileges](https://cwe.mitre.org/data/definitions/250.html)\n\nPlease note that the links provided are valid and active for anonymous users at the time of writing this report."
+              },
+              "properties": {
+                "cwe": [
+                  {
+                    "id": "CWE-250",
+                    "url": "https://cwe.mitre.org/data/definitions/250.html"
+                  }
+                ],
+                "severity": "HIGH",
+                "kind": "FAIL",
+                "tags": [
+                  "CWE-250"
+                ]
+              }
+            },
+            {
+              "id": "1ee7be6e-81bf-3cf0-a43a-67b91102c9f3",
+              "name": "High-Risk Dockerfile Vulnerability: Incomplete Package Manager Update Instruction",
+              "helpUri": "https://www.glog.ai/",
+              "help": {
+                "text": "",
+                "markdown": "## Description\n\nThe \"High-Risk Dockerfile Vulnerability: Incomplete Package Manager Update Instruction\" vulnerability in Docker arises when the Dockerfile uses a package manager to update the system packages but does not use the `--no-cache` option or clean up after the update. This can lead to outdated or unnecessary packages being left in the Docker image, which can increase the attack surface and potentially allow an attacker to exploit known vulnerabilities in these packages.\n\n## Security Concern\n\nThis is a security concern because it can lead to the inclusion of outdated or unnecessary packages in the Docker image. These packages can contain known vulnerabilities that an attacker could exploit to compromise the Docker container or the host system. Additionally, these unnecessary packages can increase the size of the Docker image, which can lead to longer build and deployment times, and can consume more system resources.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, you should always use the `--no-cache` option when using a package manager to update system packages in a Dockerfile. This will ensure that the package manager does not store any package files in the Docker image. Additionally, you should always clean up after the package manager update by removing any unnecessary files or packages.\n\n## Source Code Fix Recommendation\n\nHere is a fixed version of the provided code example:\n\n```Dockerfile\nRUN apk update --no-cache\n```\n\n## Library Dependencies\n\nThe provided code example does not require any library dependencies to execute properly.\n\n## OWASP and CWE Resources\n\n- [CWE-494: Download of Code Without Integrity Check](https://cwe.mitre.org/data/definitions/494.html)\n\nPlease note that these links are subject to change and may not always be accessible. Always verify the validity of links before using them."
+              },
+              "properties": {
+                "cwe": [
+                  {
+                    "id": "CWE-494",
+                    "url": "https://cwe.mitre.org/data/definitions/494.html"
+                  }
+                ],
+                "severity": "HIGH",
+                "kind": "FAIL",
+                "tags": [
+                  "CWE-494"
+                ]
+              }
+            }
+          ],
+          "language": "en-US",
+          "contents": [
+            "localizedData",
+            "nonLocalizedData"
+          ],
+          "isComprehensive": false
+        }
+      },
+      "language": "en-US",
+      "results": [
+        {
+          "ruleId": "1ee7be6e-81bf-3cf0-a43a-67b91102c9f3",
+          "kind": "fail",
+          "level": "error",
+          "message": {
+            "text": "High-Risk Dockerfile Vulnerability: Incomplete Package Manager Update Instruction"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "apps/pdf-generator/Dockerfile",
+                  "uriBaseId": "ROOTPATH"
+                },
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 1,
+                  "endLine": 3,
+                  "endColumn": 1,
+                  "snippet": {
+                    "text": "RUN apk update"
+                  }
+                }
+              },
+              "message": {
+                "text": "apps/pdf-generator/Dockerfile"
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "glog-pfp-ruleFileLineCode/v1": "0b81b7b45ef1bf51b881ed54be300585c5ab6dda1708f8f6f4dec326e87de223",
+            "glog-pfp-ruleFileCode/v1": "0e1e5350346a148f9e395e74304b0a99552cbce0078a7315dfcca78c7fdaffc7"
+          },
+          "fingerprints": {
+            "glog-fp-ruleFileCode/v1": "0e1e5350346a148f9e395e74304b0a99552cbce0078a7315dfcca78c7fdaffc7"
+          }
+        },
+        {
+          "ruleId": "b3302944-0937-35c3-9f01-17d1a230ae24",
+          "kind": "fail",
+          "level": "error",
+          "message": {
+            "text": "High-Risk Dockerfile Vulnerability: Lack of Non-Root User Specification"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "apps/backstage/Dockerfile",
+                  "uriBaseId": "ROOTPATH"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1,
+                  "snippet": {
+                    "text": "# Stage 1 - Create yarn install skeleton layer"
+                  }
+                }
+              },
+              "message": {
+                "text": "apps/backstage/Dockerfile"
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "glog-pfp-ruleFileLineCode/v1": "f966f99f3cdd1c867d675d521928f22e43770f7b87941552dde0289d8568bf52",
+            "glog-pfp-ruleFileCode/v1": "b1f8eee2c9e0f5d26c242dda4487140f18881b7669735612142a9ca58b4ee0c5"
+          },
+          "fingerprints": {
+            "glog-fp-ruleFileCode/v1": "b1f8eee2c9e0f5d26c242dda4487140f18881b7669735612142a9ca58b4ee0c5"
+          }
+        },
+        {
+          "ruleId": "50c7e1ea-5889-30a3-8d34-604a907d47b2",
+          "kind": "fail",
+          "level": "error",
+          "message": {
+            "text": "High-Risk Dockerfile Vulnerability: Lack of Non-Root User Specification"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "apps/cyberchef/Dockerfile",
+                  "uriBaseId": "ROOTPATH"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1,
+                  "snippet": {
+                    "text": "FROM node:11-alpine as build"
+                  }
+                }
+              },
+              "message": {
+                "text": "apps/cyberchef/Dockerfile"
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "glog-pfp-ruleFileLineCode/v1": "22ccbbda0a05b764e59fc20531fa250423f4dde9080fcf416a6f53956bd6400e",
+            "glog-pfp-ruleFileCode/v1": "4d0b3e33f256f93289bfc47a47da031fcff74c3a420103b360b56622bb0905b2"
+          },
+          "fingerprints": {
+            "glog-fp-ruleFileCode/v1": "4d0b3e33f256f93289bfc47a47da031fcff74c3a420103b360b56622bb0905b2"
+          }
+        }
+      ],
+      "newlineSequences": [
+        "\r\n",
+        "\n"
+      ]
+    }
+  ]
+}

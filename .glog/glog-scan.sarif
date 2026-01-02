@@ -1,0 +1,91 @@
+{
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Glog.AI",
+          "organization": "Glog.AI",
+          "fullName": "Glog, Making software more secure",
+          "version": "1.0.0",
+          "semanticVersion": "1.0.0",
+          "informationUri": "https://www.glog.ai",
+          "rules": [
+            {
+              "id": "b3302944-0937-35c3-9f01-17d1a230ae24",
+              "name": "High-Risk Dockerfile Vulnerability: Lack of Non-Root User Specification",
+              "helpUri": "https://www.glog.ai/",
+              "help": {
+                "text": "",
+                "markdown": "## Description\n\nIn Docker, if no user is specified, the container runs as root by default. This is a high-risk vulnerability known as \"Lack of Non-Root User Specification\". This means that if an attacker manages to break out of the application running inside the container, they would have root access to the host system, leading to a serious security breach.\n\n## Security Concern\n\nRunning Docker containers as root is a security concern because it provides the container with potentially dangerous permissions that can be exploited by an attacker. If an attacker manages to break out of the container, they would have root access to the host system, which could lead to a complete system compromise.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to always run containers as a non-root user. This can be achieved by creating a new user in the Dockerfile and switching to that user before executing any commands.\n\n## Source Code Fix Recommendation\n\nHere is an example of how to create a non-root user in a Dockerfile:\n\n```Dockerfile\n# Create app directory\nWORKDIR /usr/src/app\n\n# Create app user\nRUN addgroup -S app && adduser -S app -G app\n\n# Change to app user\nUSER app\n```\n\nIn this example, a new user and group named \"app\" are created, and then the Dockerfile switches to this user before executing any commands. This ensures that the container runs as a non-root user, mitigating the vulnerability.\n\n## References\n\n- [CWE-250: Execution with Unnecessary Privileges](https://cwe.mitre.org/data/definitions/250.html)"
+              },
+              "properties": {
+                "cwe": [
+                  {
+                    "id": "CWE-250",
+                    "url": "https://cwe.mitre.org/data/definitions/250.html"
+                  }
+                ],
+                "severity": "HIGH",
+                "kind": "FAIL",
+                "tags": [
+                  "CWE-250"
+                ]
+              }
+            }
+          ],
+          "language": "en-US",
+          "contents": [
+            "localizedData",
+            "nonLocalizedData"
+          ],
+          "isComprehensive": false
+        }
+      },
+      "language": "en-US",
+      "results": [
+        {
+          "ruleId": "b3302944-0937-35c3-9f01-17d1a230ae24",
+          "kind": "fail",
+          "level": "error",
+          "message": {
+            "text": "High-Risk Dockerfile Vulnerability: Lack of Non-Root User Specification"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "apps/backstage/Dockerfile",
+                  "uriBaseId": "ROOTPATH"
+                },
+                "region": {
+                  "startLine": 1,
+                  "startColumn": 1,
+                  "endLine": 1,
+                  "endColumn": 1,
+                  "snippet": {
+                    "text": "# Stage 1 - Create yarn install skeleton layer"
+                  }
+                }
+              },
+              "message": {
+                "text": "apps/backstage/Dockerfile"
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "glog-pfp-ruleFileLineCode/v1": "f966f99f3cdd1c867d675d521928f22e43770f7b87941552dde0289d8568bf52",
+            "glog-pfp-ruleFileCode/v1": "b1f8eee2c9e0f5d26c242dda4487140f18881b7669735612142a9ca58b4ee0c5"
+          },
+          "fingerprints": {
+            "glog-fp-ruleFileCode/v1": "b1f8eee2c9e0f5d26c242dda4487140f18881b7669735612142a9ca58b4ee0c5"
+          }
+        }
+      ],
+      "newlineSequences": [
+        "\r\n",
+        "\n"
+      ]
+    }
+  ]
+}
